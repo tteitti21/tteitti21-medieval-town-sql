@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 29.10.2022 klo 18:14
+-- Generation Time: 28.11.2022 klo 08:35
 -- Palvelimen versio: 5.7.11
 -- PHP Version: 5.6.18
 
@@ -239,6 +239,16 @@ INSERT INTO `house_residents` (`Residents`, `houseLocation`) VALUES
 ('Oliver Danes', 'Old Street 9'),
 ('Sophia Danes', 'Old Street 9'),
 ('Vivian Danes', 'Old Street 9');
+
+-- --------------------------------------------------------
+
+--
+-- Näkymän vararakenne `most_valuable_item`
+--
+CREATE TABLE `most_valuable_item` (
+`Name` varchar(30)
+,`Price` double(10,2)
+);
 
 -- --------------------------------------------------------
 
@@ -591,6 +601,15 @@ INSERT INTO `ware_tailor` (`Name`, `Stock_amount`, `Price`, `shopLocation`) VALU
 ('Leather pants', 5, 25, 'Old Street 2'),
 ('Leather shirt', 5, 25, 'Old Street 2'),
 ('Leather shoes', 15, 7, 'Old Street 2');
+
+-- --------------------------------------------------------
+
+--
+-- Näkymän rakenne `most_valuable_item`
+--
+DROP TABLE IF EXISTS `most_valuable_item`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `most_valuable_item`  AS  select `ware_blacksmith`.`Name` AS `Name`,`ware_blacksmith`.`Price` AS `Price` from `ware_blacksmith` where (`ware_blacksmith`.`Price` = (select max(`ware_blacksmith`.`Price`) from `ware_blacksmith`)) ;
 
 --
 -- Indexes for dumped tables
